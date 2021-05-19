@@ -109,7 +109,7 @@ const Signup = () => {
           placeholder='Username'
           value={username}
           onChange={(e) => {
-            setUserName(e.target.value);
+            setUsername(e.target.value);
             if (regexUserName.test(e.target.value)) {
               setUsernameAvailable(true);
             } else {
