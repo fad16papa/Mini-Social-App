@@ -10,7 +10,7 @@ function Navbar() {
 
   return (
     <Menu fluid borderless>
-      <Container>
+      <Container text>
         <Link href='/login'>
           <Menu.Item header active={isActive("/login")}>
             <Icon size='large' name='sign in' />

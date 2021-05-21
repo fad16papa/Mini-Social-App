@@ -3,7 +3,7 @@ import { toast, ToastContainer } from "react-toastify";
 export const PostDeleteToastr = () => {
   return (
     <ToastContainer
-      position="bottom-center"
+      position='bottom-center'
       autoClose={3000}
       hideProgressBar={false}
       newestOnTop={false}
@@ -19,7 +19,7 @@ export const PostDeleteToastr = () => {
         closeOnClick: true,
         pauseOnHover: false,
         draggable: true,
-        progress: undefined
+        progress: undefined,
       })}
     </ToastContainer>
   );
@@ -28,7 +28,7 @@ export const PostDeleteToastr = () => {
 export const ErrorToastr = ({ error }) => {
   return (
     <ToastContainer
-      position="bottom-center"
+      position='bottom-center'
       autoClose={3000}
       hideProgressBar={false}
       newestOnTop={false}
@@ -44,7 +44,7 @@ export const ErrorToastr = ({ error }) => {
         closeOnClick: true,
         pauseOnHover: false,
         draggable: true,
-        progress: undefined
+        progress: undefined,
       })}
     </ToastContainer>
   );
@@ -52,7 +52,7 @@ export const ErrorToastr = ({ error }) => {
 
 export const MsgSentToastr = () => (
   <ToastContainer
-    position="bottom-center"
+    position='bottom-center'
     autoClose={3000}
     hideProgressBar={false}
     newestOnTop={false}
@@ -68,7 +68,7 @@ export const MsgSentToastr = () => (
       closeOnClick: true,
       pauseOnHover: false,
       draggable: true,
-      progress: undefined
+      progress: undefined,
     })}
   </ToastContainer>
 );
