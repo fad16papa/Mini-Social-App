@@ -14,7 +14,7 @@ import {
 
 const regexUserName = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/;
 
-const Signup = () => {
+function Signup() {
   const [user, setUser] = useState({
     name: "",
     email: "",
@@ -22,6 +22,7 @@ const Signup = () => {
     bio: "",
     facebook: "",
     youtube: "",
+    twitter: "",
     instagram: "",
   });
 
@@ -36,7 +37,7 @@ const Signup = () => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [formloading, setFormLoading] = useState(false);
 
-  const [username, setUserName] = useState("");
+  const [username, setUsername] = useState("");
   const [usernameLoading, setUsernameLoading] = useState(false);
   const [usernameAvailable, setUsernameAvailable] = useState(false);
 
@@ -124,6 +125,6 @@ const Signup = () => {
       <FooterMessage />
     </Fragment>
   );
-};
+}
 
 export default Signup;
