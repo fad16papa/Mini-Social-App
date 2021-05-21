@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import {
   Form,
   Button,
@@ -8,8 +8,31 @@ import {
   Divider,
 } from "semantic-ui-react";
 
-const CommonInputs = () => {
-  return <div></div>;
+const CommonInputs = ({
+  user: { bio, facebook, instagram, youtube, twitter },
+  handleChange,
+  showSocialLinks,
+  setShowSocialLinks,
+}) => {
+  return (
+    <Fragment>
+      <Form.Field
+        required
+        control={TextArea}
+        name='bio'
+        onChange={handleChange}
+        placeholder='bio'
+      />
+
+      <Button
+        content='Add Social Links'
+        color='red'
+        icon='at'
+        type='button'
+        onClick={() => setShowSocialLinks(!showSocialLinks)}
+      />
+    </Fragment>
+  );
 };
 
 export default CommonInputs;
