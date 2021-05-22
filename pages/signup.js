@@ -21,12 +21,19 @@ function Signup() {
     instagram: "",
   });
 
+  const { name, email, password, bio } = user;
+
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, files } = e.target;
+
+    if (name === "media") {
+      setMedia(files[0]);
+      setMediaPreview(URL.createObjectURL(files[0]));
+    }
+
     setUser((prev) => ({ ...prev, [name]: value }));
   };
 
-  const { name, email, password, bio } = user;
   const [showSocialLink, setShowSocialLinks] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
