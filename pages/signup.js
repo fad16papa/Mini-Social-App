@@ -6,6 +6,8 @@ import {
   HeaderMessage,
   FooterMessage,
 } from "../components/Common/WelcomeMessage";
+import axios from "axios";
+import baseUrl from "../utils/baseUrl";
 
 const regexUserName = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/;
 
@@ -48,8 +50,6 @@ function Signup() {
   const [highlighted, setHighlighted] = useState(false);
   const inputRef = useRef();
 
-  const handleSubmit = (e) => e.preventDefault();
-
   useEffect(() => {
     const isUser = Object.values({ name, email, password, bio }).every((item) =>
       Boolean(true)
@@ -60,6 +60,12 @@ function Signup() {
       setSubmitDisabled(true);
     }
   }, [user]);
+
+  useEffect(() => {
+    username;
+  }, [username]);
+
+  const handleSubmit = (e) => e.preventDefault();
 
   return (
     <Fragment>
