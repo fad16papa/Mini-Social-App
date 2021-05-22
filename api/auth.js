@@ -1,52 +1,220 @@
-const express = require("express");
-const router = express.Router();
-const UserModel = require("../models/UserModel");
-const ProfileModel = require("../models/ProfileModel");
-const FollowerModel = require("../models/FollowerModel");
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcryptjs");
-const isEmail = require("validator/lib/isEmail");
+import React, { useState, useEffect, useRef } from "react";
+import { Form, Button, Message, Segment, Divider } from "semantic-ui-react";
+import CommonInputs from "../components/Common/CommonInputs";
+import ImageDropDiv from "../components/Common/ImageDropDiv";
+import {
+  HeaderMessage,
+  FooterMessage,
+} from "../components/Common/WelcomeMessage";
+import axios from "axios";
+import baseUrl from "../utils/baseUrl";
+import { registerUser } from "../utils/authUser";
+import uploadPic from "../utils/uploadPicToCloudinary";
+const regexUserName = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/;
+let cancel;
 
-router.post("/", async (req, res) => {
-  const { email, password } = req.body.user;
+function Signup() {
+  const [user, setUser] = useState({
+    name: "",
+    email: "",
+    password: "",
+    bio: "",
+    facebook: "",
+    youtube: "",
+    twitter: "",
+    instagram: "",
+  });
 
-  if (!isEmail(email)) {
-    return res.status(401).send("Invalid Email");
-  }
+  const { name, email, password, bio } = user;
 
-  if (password.length < 6) {
-    return res.status(401).send("Password must be atleast 6 characters.");
-  }
+  const handleChange = (e) => {
+    const { name, value, files } = e.target;
 
-  try {
-    const user = await UserModel.findOne({
-      email: email.toLocaleLowerCase(),
-    }).select("+password");
-
-    if (user) {
-      return res.status(401).send("Invalid Crendentials");
+    if (name === "media") {
+      setMedia(files[0]);
+      setMediaPreview(URL.createObjectURL(files[0]));
     }
 
-    const isPassword = await bcrypt.compare(password, user.password);
+    setUser((prev) => ({ ...prev, [name]: value }));
+  };
 
-    if (!isPassword) {
-      return res.status(401).send("Invalid Credentialsß");
-    }
+  const [showSocialLinks, setShowSocialLinks] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [errorMsg, setErrorMsg] = useState(null);
+  const [formLoading, setFormLoading] = useState(false);
+  const [submitDisabled, setSubmitDisabled] = useState(true);
 
-    const payload = { userId: user._id };
-    jwt.sign(
-      payload,
-      process.env.jwtSecret,
-      { expiresIn: "2d" },
-      (err, token) => {
-        if (err) {
-          throw err;
-        }
-        res.status(200).json(token);
-      }
+  const [username, setUsername] = useState("");
+  const [usernameLoading, setUsernameLoading] = useState(false);
+  const [usernameAvailable, setUsernameAvailable] = useState(false);
+
+  const [media, setMedia] = useState(null);
+  const [mediaPreview, setMediaPreview] = useState(null);
+  const [highlighted, setHighlighted] = useState(false);
+  const inputRef = useRef();
+
+  useEffect(() => {
+    const isUser = Object.values({ name, email, password, bio }).every((item) =>
+      Boolean(item)
     );
-  } catch (error) {
-    console.log(error);
-    return res.status(500).send(`Server error`);
-  }
-});
+    isUser ? setSubmitDisabled(false) : setSubmitDisabled(true);
+  }, [user]);
+
+  const checkUsername = async () => {
+    setUsernameLoading(true);
+    try {
+      cancel && cancel();
+
+      const CancelToken = axios.CancelToken;
+
+      const res = await axios.get(`${baseUrl}/api/signup/${username}`, {
+        cancelToken: new CancelToken((canceler) => {
+          cancel = canceler;
+        }),
+      });
+
+      if (errorMsg !== null) setErrorMsg(null);
+
+      if (res.data === "Available") {
+        setUsernameAvailable(true);
+        setUser((prev) => ({ ...prev, username }));
+      }
+    } catch (error) {
+      setErrorMsg("Username Not Available");
+      setUsernameAvailable(false);
+    }
+    setUsernameLoading(false);
+  };
+
+  useEffect(() => {
+    username === "" ? setUsernameAvailable(false) : checkUsername();
+  }, [username]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setFormLoading(true);
+
+    let profilePicUrl;
+    if (media !== null) {
+      profilePicUrl = await uploadPic(media);
+    }
+
+    if (media !== null && !profilePicUrl) {
+      setFormLoading(false);
+      return setErrorMsg("Error Uploading Image");
+    }
+
+    await registerUser(user, profilePicUrl, setErrorMsg, setFormLoading);
+  };
+
+  return (
+    <>
+      <HeaderMessage />
+      <Form
+        loading={formLoading}
+        error={errorMsg !== null}
+        onSubmit={handleSubmit}>
+        <Message
+          error
+          header='Oops!'
+          content={errorMsg}
+          onDismiss={() => setErrorMsg(null)}
+        />
+
+        <Segment>
+          <ImageDropDiv
+            mediaPreview={mediaPreview}
+            setMediaPreview={setMediaPreview}
+            setMedia={setMedia}
+            inputRef={inputRef}
+            highlighted={highlighted}
+            setHighlighted={setHighlighted}
+            handleChange={handleChange}
+          />
+          <Form.Input
+            required
+            label='Name'
+            placeholder='Name'
+            name='name'
+            value={name}
+            onChange={handleChange}
+            fluid
+            icon='user'
+            iconPosition='left'
+          />
+
+          <Form.Input
+            required
+            label='Email'
+            placeholder='Email'
+            name='email'
+            value={email}
+            onChange={handleChange}
+            fluid
+            icon='envelope'
+            iconPosition='left'
+            type='email'
+          />
+
+          <Form.Input
+            label='Password'
+            placeholder='Password'
+            name='password'
+            value={password}
+            onChange={handleChange}
+            fluid
+            icon={{
+              name: "eye",
+              circular: true,
+              link: true,
+              onClick: () => setShowPassword(!showPassword),
+            }}
+            iconPosition='left'
+            type={showPassword ? "text" : "password"}
+            required
+          />
+
+          <Form.Input
+            loading={usernameLoading}
+            error={!usernameAvailable}
+            required
+            label='Username'
+            placeholder='Username'
+            value={username}
+            onChange={(e) => {
+              setUsername(e.target.value);
+              if (regexUserName.test(e.target.value)) {
+                setUsernameAvailable(true);
+              } else {
+                setUsernameAvailable(false);
+              }
+            }}
+            fluid
+            icon={usernameAvailable ? "check" : "close"}
+            iconPosition='left'
+          />
+
+          <CommonInputs
+            user={user}
+            showSocialLinks={showSocialLinks}
+            setShowSocialLinks={setShowSocialLinks}
+            handleChange={handleChange}
+          />
+
+          <Divider hidden />
+          <Button
+            icon='signup'
+            content='Signup'
+            type='submit'
+            color='orange'
+            disabled={submitDisabled || !usernameAvailable}
+          />
+        </Segment>
+      </Form>
+
+      <FooterMessage />
+    </>
+  );
+}
+
+export default Signup;

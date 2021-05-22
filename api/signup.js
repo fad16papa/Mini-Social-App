@@ -11,27 +11,22 @@ const userPng =
 
 const regexUserName = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/;
 
-router.get("/username", async (req, res) => {
+router.get("/:username", async (req, res) => {
   const { username } = req.params;
+
   try {
-    //Check if the username has length < 1
     if (username.length < 1) {
       return res.status(401).send("Invalid");
     }
 
-    //Check if the username passed the regexUserName
     if (!regexUserName.test(username)) {
       return res.status(401).send("Invalid");
     }
 
-    //Check the username in database in lowercase
-    const user = await UserModel.findOne({
-      username: username.toLocaleLowerCase(),
-    });
+    const user = await UserModel.findOne({ username: username.toLowerCase() });
 
-    //Return an error message if the username is already taken
     if (user) {
-      return res.status(401).send("Username is already taken");
+      return res.status(401).send("Username already taken");
     }
 
     return res.status(200).send("Available");
@@ -40,8 +35,6 @@ router.get("/username", async (req, res) => {
     return res.status(500).send(`Server error`);
   }
 });
-
-module.express = router;
 
 router.post("/", async (req, res) => {
   const {
@@ -56,25 +49,23 @@ router.post("/", async (req, res) => {
     instagram,
   } = req.body.user;
 
-  if (!isEmail(email)) {
-    return res.status(401).send("Invalid Email");
-  }
+  if (!isEmail(email)) return res.status(401).send("Invalid Email");
 
   if (password.length < 6) {
-    return res.status(401).send("Password must be atleast 6 characters.");
+    return res.status(401).send("Password must be atleast 6 characters");
   }
 
   try {
     let user;
-    user = await UserModel.findOne({ email: email.toLocaleLowerCase() });
+    user = await UserModel.findOne({ email: email.toLowerCase() });
     if (user) {
       return res.status(401).send("User already registered");
     }
 
     user = new UserModel({
       name,
-      email: email.toLocaleLowerCase(),
-      username: username.toLocaleLowerCase(),
+      email: email.toLowerCase(),
+      username: username.toLowerCase(),
       password,
       profilePicUrl: req.body.profilePicUrl || userPng,
     });
@@ -88,18 +79,10 @@ router.post("/", async (req, res) => {
     profileFields.bio = bio;
 
     profileFields.social = {};
-    if (facebook) {
-      profileFields.social.facebook = facebook;
-    }
-    if (youtube) {
-      profileFields.social.facebook = youtube;
-    }
-    if (twitter) {
-      profileFields.social.facebook = twitter;
-    }
-    if (instagram) {
-      profileFields.social.facebook = instagram;
-    }
+    if (facebook) profileFields.social.facebook = facebook;
+    if (youtube) profileFields.social.youtube = youtube;
+    if (instagram) profileFields.social.instagram = instagram;
+    if (twitter) profileFields.social.twitter = twitter;
 
     await new ProfileModel(profileFields).save();
     await new FollowerModel({
@@ -114,14 +97,14 @@ router.post("/", async (req, res) => {
       process.env.jwtSecret,
       { expiresIn: "2d" },
       (err, token) => {
-        if (err) {
-          throw err;
-        }
+        if (err) throw err;
         res.status(200).json(token);
       }
     );
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return res.status(500).send(`Server error`);
   }
 });
+
+module.exports = router;
