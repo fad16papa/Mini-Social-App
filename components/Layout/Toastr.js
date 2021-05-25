@@ -3,7 +3,7 @@ import { toast, ToastContainer } from "react-toastify";
 export const PostDeleteToastr = () => {
   return (
     <ToastContainer
-      position='bottom-center'
+      position="bottom-center"
       autoClose={3000}
       hideProgressBar={false}
       newestOnTop={false}
@@ -11,7 +11,8 @@ export const PostDeleteToastr = () => {
       rtl={false}
       pauseOnFocusLoss
       draggable
-      pauseOnHover={false}>
+      pauseOnHover={false}
+    >
       {toast.info("Deleted Successfully", {
         position: "bottom-center",
         autoClose: 3000,
@@ -28,7 +29,7 @@ export const PostDeleteToastr = () => {
 export const ErrorToastr = ({ error }) => {
   return (
     <ToastContainer
-      position='bottom-center'
+      position="bottom-center"
       autoClose={3000}
       hideProgressBar={false}
       newestOnTop={false}
@@ -36,7 +37,8 @@ export const ErrorToastr = ({ error }) => {
       rtl={false}
       pauseOnFocusLoss
       draggable
-      pauseOnHover={false}>
+      pauseOnHover={false}
+    >
       {toast.error(error, {
         position: "bottom-center",
         autoClose: 3000,
@@ -52,7 +54,7 @@ export const ErrorToastr = ({ error }) => {
 
 export const MsgSentToastr = () => (
   <ToastContainer
-    position='bottom-center'
+    position="bottom-center"
     autoClose={3000}
     hideProgressBar={false}
     newestOnTop={false}
@@ -60,7 +62,8 @@ export const MsgSentToastr = () => (
     rtl={false}
     pauseOnFocusLoss
     draggable
-    pauseOnHover={false}>
+    pauseOnHover={false}
+  >
     {toast.success("Sent successfully", {
       position: "bottom-center",
       autoClose: 3000,

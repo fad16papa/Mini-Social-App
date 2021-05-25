@@ -15,19 +15,13 @@ router.get("/:username", async (req, res) => {
   const { username } = req.params;
 
   try {
-    if (username.length < 1) {
-      return res.status(401).send("Invalid");
-    }
+    if (username.length < 1) return res.status(401).send("Invalid");
 
-    if (!regexUserName.test(username)) {
-      return res.status(401).send("Invalid");
-    }
+    if (!regexUserName.test(username)) return res.status(401).send("Invalid");
 
     const user = await UserModel.findOne({ username: username.toLowerCase() });
 
-    if (user) {
-      return res.status(401).send("Username already taken");
-    }
+    if (user) return res.status(401).send("Username already taken");
 
     return res.status(200).send("Available");
   } catch (error) {
@@ -49,9 +43,7 @@ router.post("/", async (req, res) => {
     instagram,
   } = req.body.user;
 
-  if (!isEmail(email)) {
-    return res.status(401).send("Invalid Email");
-  }
+  if (!isEmail(email)) return res.status(401).send("Invalid Email");
 
   if (password.length < 6) {
     return res.status(401).send("Password must be atleast 6 characters");

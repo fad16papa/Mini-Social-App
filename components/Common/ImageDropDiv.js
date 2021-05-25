@@ -16,10 +16,10 @@ function ImageDropDiv({
         <Segment placeholder basic secondary>
           <input
             style={{ display: "none" }}
-            type='file'
-            accept='image/*'
+            type="file"
+            accept="image/*"
             onChange={handleChange}
-            name='media'
+            name="media"
             ref={inputRef}
           />
 
@@ -39,13 +39,14 @@ function ImageDropDiv({
               const droppedFile = Array.from(e.dataTransfer.files);
               setMedia(droppedFile[0]);
               setMediaPreview(URL.createObjectURL(droppedFile[0]));
-            }}>
+            }}
+          >
             {mediaPreview === null ? (
               <>
                 <Segment color={highlighted ? "green" : ""} placeholder basic>
                   <Header icon>
                     <Icon
-                      name='file image outline'
+                      name="file image outline"
                       style={{ cursor: "pointer" }}
                       onClick={() => inputRef.current.click()}
                     />
@@ -55,10 +56,10 @@ function ImageDropDiv({
               </>
             ) : (
               <>
-                <Segment color='green' placeholder basic>
+                <Segment color="green" placeholder basic>
                   <Image
                     src={mediaPreview}
-                    size='medium'
+                    size="medium"
                     centered
                     style={{ cursor: "pointer" }}
                     onClick={() => inputRef.current.click()}

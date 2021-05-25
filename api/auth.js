@@ -9,9 +9,7 @@ const isEmail = require("validator/lib/isEmail");
 router.post("/", async (req, res) => {
   const { email, password } = req.body.user;
 
-  if (!isEmail(email)) {
-    return res.status(401).send("Invalid Email");
-  }
+  if (!isEmail(email)) return res.status(401).send("Invalid Email");
 
   if (password.length < 6) {
     return res.status(401).send("Password must be atleast 6 characters");

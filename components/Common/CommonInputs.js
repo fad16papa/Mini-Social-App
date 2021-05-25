@@ -12,17 +12,17 @@ function CommonInputs({
       <Form.Field
         required
         control={TextArea}
-        name='bio'
+        name="bio"
         value={bio}
         onChange={handleChange}
-        placeholder='bio'
+        placeholder="bio"
       />
 
       <Button
-        content='Add Social Links'
-        color='red'
-        icon='at'
-        type='button'
+        content="Add Social Links"
+        color="red"
+        icon="at"
+        type="button"
         onClick={() => setShowSocialLinks(!showSocialLinks)}
       />
 
@@ -30,42 +30,42 @@ function CommonInputs({
         <>
           <Divider />
           <Form.Input
-            icon='facebook f'
-            iconPosition='left'
-            name='facebook'
+            icon="facebook f"
+            iconPosition="left"
+            name="facebook"
             value={facebook}
             onChange={handleChange}
           />
 
           <Form.Input
-            icon='twitter'
-            iconPosition='left'
-            name='twitter'
+            icon="twitter"
+            iconPosition="left"
+            name="twitter"
             value={twitter}
             onChange={handleChange}
           />
 
           <Form.Input
-            icon='instagram'
-            iconPosition='left'
-            name='instagram'
+            icon="instagram"
+            iconPosition="left"
+            name="instagram"
             value={instagram}
             onChange={handleChange}
           />
 
           <Form.Input
-            icon='youtube'
-            iconPosition='left'
-            name='youtube'
+            icon="youtube"
+            iconPosition="left"
+            name="youtube"
             value={youtube}
             onChange={handleChange}
           />
 
           <Message
-            icon='attention'
+            icon="attention"
             info
-            size='small'
-            header='Social Media Links Are Optional!'
+            size="small"
+            header="Social Media Links Are Optional!"
           />
         </>
       )}

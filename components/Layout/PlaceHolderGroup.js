@@ -32,14 +32,14 @@ export const PlaceHolderPosts = () =>
 export const PlaceHolderSuggestions = () => (
   <>
     <List.Item>
-      <Card color='red'>
+      <Card color="red">
         <Placeholder>
           <Placeholder.Image square />
         </Placeholder>
         <Card.Content>
           <Placeholder>
             <Placeholder.Header>
-              <Placeholder.Line length='medium' />
+              <Placeholder.Line length="medium" />
             </Placeholder.Header>
           </Placeholder>
         </Card.Content>
@@ -48,10 +48,10 @@ export const PlaceHolderSuggestions = () => (
           <Button
             disabled
             circular
-            size='small'
-            icon='add user'
-            content='Follow'
-            color='twitter'
+            size="small"
+            icon="add user"
+            content="Follow"
+            color="twitter"
           />
         </Card.Content>
       </Card>
@@ -73,8 +73,8 @@ export const PlaceHolderNotifications = () =>
   ));
 
 export const EndMessage = () => (
-  <Container textAlign='center'>
-    <Icon name='refresh' size='large' />
+  <Container textAlign="center">
+    <Icon name="refresh" size="large" />
     <Divider hidden />
   </Container>
 );
@@ -83,7 +83,7 @@ export const LikesPlaceHolder = () =>
   range(1, 6).map((item) => (
     <Placeholder key={item} style={{ minWidth: "200px" }}>
       <Placeholder.Header image>
-        <Placeholder.Line length='full' />
+        <Placeholder.Line length="full" />
       </Placeholder.Header>
     </Placeholder>
   ));

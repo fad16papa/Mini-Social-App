@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { Form, Button, Message, Segment, Divider } from "semantic-ui-react";
 import { loginUser } from "../utils/authUser";
 import {
@@ -43,10 +43,11 @@ function Login() {
       <Form
         loading={formLoading}
         error={errorMsg !== null}
-        onSubmit={handleSubmit}>
+        onSubmit={handleSubmit}
+      >
         <Message
           error
-          header='Oops!'
+          header="Oops!"
           content={errorMsg}
           onDismiss={() => setErrorMsg(null)}
         />
@@ -54,21 +55,21 @@ function Login() {
         <Segment>
           <Form.Input
             required
-            label='Email'
-            placeholder='Email'
-            name='email'
+            label="Email"
+            placeholder="Email"
+            name="email"
             value={email}
             onChange={handleChange}
             fluid
-            icon='envelope'
-            iconPosition='left'
-            type='email'
+            icon="envelope"
+            iconPosition="left"
+            type="email"
           />
 
           <Form.Input
-            label='Password'
-            placeholder='Password'
-            name='password'
+            label="Password"
+            placeholder="Password"
+            name="password"
             value={password}
             onChange={handleChange}
             fluid
@@ -78,17 +79,17 @@ function Login() {
               link: true,
               onClick: () => setShowPassword(!showPassword),
             }}
-            iconPosition='left'
+            iconPosition="left"
             type={showPassword ? "text" : "password"}
             required
           />
 
           <Divider hidden />
           <Button
-            icon='signup'
-            content='Login'
-            type='submit'
-            color='orange'
+            icon="signup"
+            content="Login"
+            type="submit"
+            color="orange"
             disabled={submitDisabled}
           />
         </Segment>
