@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, Fragment } from "react";
 import { Form, Button, Message, Segment, Divider } from "semantic-ui-react";
 import CommonInputs from "../components/Common/CommonInputs";
 import ImageDropDiv from "../components/Common/ImageDropDiv";
@@ -108,7 +108,7 @@ function Signup() {
   };
 
   return (
-    <>
+    <Fragment>
       <HeaderMessage />
       <Form
         loading={formLoading}
@@ -214,7 +214,7 @@ function Signup() {
       </Form>
 
       <FooterMessage />
-    </>
+    </Fragment>
   );
 }
 
