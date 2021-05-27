@@ -1,4 +1,8 @@
 import App from "next/app";
+import axios from "axios";
+import { parseCookies, destroyCookie } from "nookies";
+import baseUrl from "../utils/baseUrl";
+import { registerUser } from "../utils/authUser";
 import Layout from "../components/Layout/Layout";
 import "semantic-ui-css/semantic.min.css";
 
