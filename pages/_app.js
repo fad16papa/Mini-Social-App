@@ -6,7 +6,7 @@ import Layout from "../components/Layout/Layout";
 import "react-toastify/dist/ReactToastify.css";
 import "semantic-ui-css/semantic.min.css";
 
-function MyApp({Component, pageProps}) {
+function MyApp ({Component, pageProps}) {
 return( <Layout {...pageProps}>
   <Component {...pageProps} />
 </Layout>);
