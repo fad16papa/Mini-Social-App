@@ -5,6 +5,7 @@ import {
   HeaderMessage,
   FooterMessage,
 } from "../components/Common/WelcomeMessage";
+import Cookie from "js-cookie";
 
 function Login() {
   const [user, setUser] = useState({
@@ -36,6 +37,15 @@ function Login() {
 
     await loginUser(user, setErrorMsg, setFormLoading);
   };
+
+  useEffect(() => {
+    document.title = "Welcome Back";
+    const userEmail = Cookie.get("userEmail");
+
+    if (userEmail) {
+      setUser((prev) => ({ ...prev, email: userEmail }));
+    }
+  }, []);
 
   return (
     <>
