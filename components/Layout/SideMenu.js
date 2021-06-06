@@ -26,6 +26,7 @@ const SideMenu = ({
             </List.Content>
           </List.Item>
         </Link>
+        <br />
 
         <Link href="/messages">
           <List.Item active={isActive("/messages")}>
@@ -41,6 +42,7 @@ const SideMenu = ({
             </List.Content>
           </List.Item>
         </Link>
+        <br />
 
         <Link href="/notifications">
           <List.Item active={isActive("/notifications")}>
@@ -48,7 +50,8 @@ const SideMenu = ({
               name={unreadNotification ? "hand point right" : "bell outline"}
               size="large"
               color={
-                (isActive("/messages") && "teal") || (unreadMessage && "orange")
+                (isActive("/notifications") && "teal") ||
+                (unreadNotification && "orange")
               }
             />
             <List.Content>
@@ -56,6 +59,7 @@ const SideMenu = ({
             </List.Content>
           </List.Item>
         </Link>
+        <br />
 
         <Link href={`/${username}`}>
           <List.Item active={router.query.username === username}>
@@ -65,10 +69,11 @@ const SideMenu = ({
               color={router.query.username === username && "teal"}
             />
             <List.Content>
-              <List.Header content="Acount" />
+              <List.Header content="Account" />
             </List.Content>
           </List.Item>
         </Link>
+        <br />
 
         <List.Item onClick={() => logoutUser(email)}>
           <Icon name="log out" size="large" />
