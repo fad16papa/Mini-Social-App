@@ -10,6 +10,7 @@ import axios from "axios";
 import baseUrl from "../utils/baseUrl";
 import { registerUser } from "../utils/authUser";
 import uploadPic from "../utils/uploadPicToCloudinary";
+
 const regexUserName = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/;
 let cancel;
 
